@@ -10,7 +10,7 @@ class Player:
                     's': (1, 0),
                     'd': (0, 1)}
 
-    def __init__(self, name, points=0, start=(0, 0)):
+    def __init__(self, name,start=(0, 0) ,points=0):
         self.name = name
         self.points = points
         self.position = start
@@ -26,8 +26,9 @@ class Player:
 
 class Game:
 
-    def __init__(self, player, size=10):
-        self.player = player
+    def __init__(self, player1, player2, size=10):
+        self.player1 = player1
+        self.player2 = player2
         self.board_size = size
         self.candies = []
 
@@ -37,8 +38,10 @@ class Game:
             for col in range(self.board_size):
                 if (line, col) in self.candies:
                     print("*", end=" ")
-                elif (line, col) == self.player.position:
-                    print("O", end=" ")
+                elif (line, col) == self.player1.position:
+                    print("1", end=" ")
+                elif (line, col) == self.player2.position:
+                    print("2", end=" ")
                 else:
                     print(".", end=" ")
             print()
@@ -51,9 +54,12 @@ class Game:
 
     # Regarde s'il y a un bonbon à prendre (et le prend)
     def check_candy(self):
-        if self.player.position in self.candies:
-            self.player.points += 1
-            self.candies.remove(self.player.position)
+        if self.player1.position in self.candies:
+            self.player1.points += 1
+            self.candies.remove(self.player1.position)
+        if self.player2.position in self.candies:
+            self.player2.points += 1
+            self.candies.remove(self.player2.position)
 
     # Joue une partie complète
     def play(self):
@@ -64,7 +70,8 @@ class Game:
         now = datetime.datetime.today()
 
         while now < end:
-            self.player.move()
+            self.player1.move()
+            self.player2.move()
             self.check_candy()
 
             if random.randint(1, 3) == 1:
@@ -75,7 +82,8 @@ class Game:
             now = datetime.datetime.today()
 
         print("----- Terminé -----")
-        print("Vous avez", self.player.points, "points")
+        print(self.player1.name, "vous avez", self.player1.points, "points")
+        print(self.player2.name,"vous avez", self.player2.points, "points")
 
     @staticmethod
     # retourne le moment où le jeu est censé être fini
@@ -87,7 +95,8 @@ class Game:
 
 if __name__ == "__main__":
     p = Player("Maxime")
-    g = Game(p)
+    p2 = Player("Anne",(0, 9))
+    g = Game(p,p2)
     g.play()
 
 
