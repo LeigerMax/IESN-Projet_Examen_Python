@@ -95,7 +95,7 @@ class Game:
 
 if __name__ == "__main__":
     p = Player("Maxime")
-    p2 = Player("Anne",(0, 9))
+    p2 = Player("Miguel",(0, 9))
     g = Game(p,p2)
     g.play()
 
