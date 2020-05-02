@@ -19,16 +19,31 @@ class Player:
         key = input("Mouvement (z,q,s,d) : ")
         while key not in Player.keyboard_key.keys():
             key = input("Mouvement (z,q,s,d) : ")
-
         move = Player.keyboard_key[key]
+        self.position = (self.position[0] + move[0], self.position[1] + move[1])
+
+class Enemy:
+    keyboard_key = {'z': (-1, 0),
+                    'q': (0, -1),
+                    's': (1, 0),
+                    'd': (0, 1)}
+
+    def __init__(self, name,start=(5, 5)):
+        self.name = name
+        self.position = start
+
+    def move(self):
+        key = random.choice('zqsd')
+        move = Enemy.keyboard_key[key]
         self.position = (self.position[0] + move[0], self.position[1] + move[1])
 
 
 class Game:
 
-    def __init__(self, player1, player2, size=10):
+    def __init__(self, player1, player2, enemy, size=10):
         self.player1 = player1
         self.player2 = player2
+        self.enemy = enemy
         self.board_size = size
         self.candies = []
         self.candyPartyTrue = 0
@@ -39,6 +54,8 @@ class Game:
             for col in range(self.board_size):
                 if (line, col) in self.candies:
                     print("*", end=" ")
+                elif (line, col) == self.enemy.position:
+                    print("X", end=" ")
                 elif (line, col) == self.player1.position:
                     print("1", end=" ")
                 elif (line, col) == self.player2.position:
@@ -70,22 +87,31 @@ class Game:
         pointsWin = random.randint(1, 3)
         CandyPartyTrue = random.randint(1, 5)
         if self.player1.position in self.candies:
-            print(pointsWin)
-            if self.player1.points < 10 :
-                self.player1.points += pointsWin
-            self.player1.points += 1
+            print(self.player1.name ,"+",pointsWin, "point(s)")
+            self.player1.points += pointsWin
             self.candies.remove(self.player1.position)
             if (CandyPartyTrue >= 4) :
                 self.candyPartyTrue = 1
 
         if self.player2.position in self.candies:
-            print(pointsWin)
-            if self.player2.points < 10 :
-                self.player2.points += pointsWin
-            self.player2.points += 1
+            print(self.player2.name ,"+",pointsWin, "point(s)")
+            self.player2.points += pointsWin
             self.candies.remove(self.player2.position)
             if (CandyPartyTrue >= 4) :
                 self.candyPartyTrue = 1
+
+        if self.enemy.position in self.candies:
+            self.candies.remove(self.enemy.position)
+
+
+    # Regarde s'il y a un enemy
+    def check_Enemy(self):
+        if self.player1.position == self.enemy.position:
+            print(self.player1.name, " -2 pts")
+            self.player1.points -= 2
+        elif self.player2.position == self.enemy.position:
+            print(self.player2.name, " -2 pts")
+            self.player2.points -= 2
 
     # Joue une partie complète
     def play(self):
@@ -98,7 +124,9 @@ class Game:
         while now < end:
             self.player1.move()
             self.player2.move()
+            self.enemy.move()
             self.check_candy()
+            self.check_Enemy()
 
             if random.randint(1, 3) == 1:
                 self.pop_candy()
@@ -124,9 +152,10 @@ class Game:
 
 
 if __name__ == "__main__":
-    p = Player("Maxime")
+    p1 = Player("Maxime")
     p2 = Player("Miguel",(0, 9))
-    g = Game(p,p2)
+    e = Enemy("Lanress")
+    g = Game(p1,p2,e)
     g.play()
 
 
