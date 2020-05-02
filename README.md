@@ -5,7 +5,7 @@
 - [x] Ajouter un second joueur [3] 
 - [ ] Ajouter des ennemis qui se déplacent aléatoirement [2]
 - [x] Donner des valeurs différentes aux bonbons récoltés (éventuellement malus) [1] Quand le joueur à moins de 10 bonbons il peut gagner entre 1 et 3 bonbons
-- [ ] Ajouter des bonbons bonus (par exemple faire apparaitre pleins de bonbons) [2]
+- [x] Ajouter des bonbons bonus (par exemple faire apparaitre pleins de bonbons) [2]
 - [ ] Encapsuler les classes [1]
 - [ ] Utiliser des exceptions [2]
 - [ ] Permettre de mettre le jeu en pause [3]
@@ -16,4 +16,7 @@
 - [ ] Enregistrer les tops joueurs [1] (dans un fichier [3])
 - [ ] Améliorer le jeu pour en faire un snake [4]
 
+Points potentiel : 6
 
+##CandyParty 
+Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
