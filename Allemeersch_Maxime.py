@@ -31,6 +31,7 @@ class Game:
         self.player2 = player2
         self.board_size = size
         self.candies = []
+        self.candyPartyTrue = 0
 
     # Dessine le plateau
     def draw(self):
@@ -52,14 +53,39 @@ class Game:
         if new_candy not in self.candies:
             self.candies.append(new_candy)
 
+    # CandyParty
+    def pop_candyParty(self):
+        candytSpawn = random.randint(1, 5)
+        print("Vous avez trouver un bonbon magique ! ", candytSpawn, " bonbons ont apparut")
+        while (candytSpawn != 0):
+            new_candy = (random.choice(range(self.board_size)), random.choice(range(self.board_size)))
+            if new_candy not in self.candies:
+                self.candies.append(new_candy)
+            candytSpawn = candytSpawn -1
+        print("Fin ajout ")
+
+
     # Regarde s'il y a un bonbon à prendre (et le prend)
     def check_candy(self):
+        pointsWin = random.randint(1, 3)
+        CandyPartyTrue = random.randint(1, 5)
         if self.player1.position in self.candies:
+            print(pointsWin)
+            if self.player1.points < 10 :
+                self.player1.points += pointsWin
             self.player1.points += 1
             self.candies.remove(self.player1.position)
+            if (CandyPartyTrue >= 4) :
+                self.candyPartyTrue = 1
+
         if self.player2.position in self.candies:
+            print(pointsWin)
+            if self.player2.points < 10 :
+                self.player2.points += pointsWin
             self.player2.points += 1
             self.candies.remove(self.player2.position)
+            if (CandyPartyTrue >= 4) :
+                self.candyPartyTrue = 1
 
     # Joue une partie complète
     def play(self):
@@ -76,6 +102,10 @@ class Game:
 
             if random.randint(1, 3) == 1:
                 self.pop_candy()
+
+            if self.candyPartyTrue == 1: #candyParty
+                self.candyPartyTrue = 0
+                self.pop_candyParty()
 
             self.draw()
 
