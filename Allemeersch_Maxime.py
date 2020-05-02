@@ -89,7 +89,7 @@ class Game:
 
     # Joue une partie complète
     def play(self):
-        print("--- Début de la partie ---")
+        print("--- Début de la partie ---") 
         self.draw()
 
         end = Game.end_time(1, 0)
