@@ -10,7 +10,7 @@
 - [ ] Utiliser des exceptions [2]
 - [ ] Permettre de mettre le jeu en pause [3]
 - [X] Améliorer les ennemis en leur donnant un peu d’intelligence (IA) [2]
-- [ ] Proposer un niveau de difficulté différent (plus de temps, des pénalités…) [2]
+- [X] Proposer un niveau de difficulté différent (plus de temps, des pénalités…) [2]
 - [X] Empêcher de sortir du plateau [1]
 - [X] Permettre de passer à travers les murs et de réapparaitre de l’autre côté [2]
 - [X] Enregistrer les tops joueurs [1] (dans un fichier [3])
