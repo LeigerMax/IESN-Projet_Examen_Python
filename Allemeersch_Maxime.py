@@ -59,15 +59,15 @@ class Game:
             print("|", end=" ") #WalllineRight
             for col in range(self.board_size):
                 if (line, col) in self.candies:
-                    print("*", end=" ")
+                    print("\033[35;1m*\033[0m", end=" ")
                 elif (line, col) == self.enemy1.position:
-                    print("X", end=" ")
+                    print("\033[31;1mX\033[0m", end=" ")
                 elif (line, col) == self.enemy2.position:
-                    print("X", end=" ")
+                    print("\033[31;1mX\033[0m", end=" ")
                 elif (line, col) == self.player1.position:
-                    print("1", end=" ")
+                    print("\033[32;1m1\033[0m", end=" ")
                 elif (line, col) == self.player2.position:
-                    print("2", end=" ")
+                    print("\033[34;1m2\033[0m", end=" ")
                 else :
                     print(".", end=" ")
 
@@ -211,9 +211,9 @@ class Game:
                  print(self.player1.name, " -",self.player1.points," pts")
                  self.player1.points -= self.player1.points
         elif self.player2.position == self.enemy1.position or self.player2.position == self.enemy2.position:
-            if self.player12.points <= 10:
-                print(self.player12.name, " -2 pts")
-                self.player12.points -= 2
+            if self.player2.points <= 10:
+                print(self.player2.name, " -2 pts")
+                self.player2.points -= 2
             elif self.player2.points > 10:
                 print(self.player2.name, " -",self.player2.points," pts")
                 self.player2.points -= self.player2.points
@@ -279,10 +279,12 @@ class Game:
         return end
 
 if __name__ == "__main__":
-    p1 = Player("Maxime")
-    p2 = Player("Miguel",(0, 9))
-    e1 = Enemy("Lanress",(7,2))
-    e2 = Enemy("Body",(7,7))
+    NamePlayer1 = input("Nom du joueur 1 : ")
+    NamePlayer2 = input("Nom du joueur 2 : ")
+    p1 = Player(NamePlayer1)
+    p2 = Player(NamePlayer2,(0, 9))
+    e1 = Enemy("Enemy1",(7,2))
+    e2 = Enemy("Enemy2",(7,7))
     g = Game(p1,p2,e1,e2)
     g.play()
 
