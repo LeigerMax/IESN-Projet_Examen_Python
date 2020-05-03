@@ -93,6 +93,7 @@ class Game:
                 self.candies.append(new_candy)
             candytSpawn = candytSpawn -1
 
+    # Permet au joueur de se téléporter à l'opposé
     def check_Position_TP(self):
         ListA = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         ListB = [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10]
@@ -134,6 +135,7 @@ class Game:
                 elif self.enemy2.position == (self.board_size, CheckFirst): #Vers le bas Enemy
                     self.enemy2.position = (0, CheckFirst)
 
+    #Permet de bloquer le passage des murs
     def check_Wall(self):
         ListA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         ListB = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
@@ -199,14 +201,36 @@ class Game:
             self.candies.remove(self.enemy2.position)
 
 
-    # Regarde s'il y a un enemy
+        # Regarde s'il y a un enemy
     def check_Enemy(self):
-        if self.player1.position == self.enemy1.position or self.player1.position == self.enemy1.position :
-            print(self.player1.name, " -2 pts")
-            self.player1.points -= 2
-        elif self.player2.position == self.enemy1.position or self.player2.position == self.enemy1.position:
-            print(self.player2.name, " -2 pts")
-            self.player2.points -= 2
+        if self.player1.position == self.enemy1.position or self.player1.position == self.enemy2.position :
+            if self.player1.points <= 10:
+                print(self.player1.name, " -2 pts")
+                self.player1.points -= 2
+            elif self.player1.points > 10:
+                 print(self.player1.name, " -",self.player1.points," pts")
+                 self.player1.points -= self.player1.points
+        elif self.player2.position == self.enemy1.position or self.player2.position == self.enemy2.position:
+            if self.player12.points <= 10:
+                print(self.player12.name, " -2 pts")
+                self.player12.points -= 2
+            elif self.player2.points > 10:
+                print(self.player2.name, " -",self.player2.points," pts")
+                self.player2.points -= self.player2.points
+
+    #Enregistre le score
+    def StoreLeaderBoard(self):
+        fi = open('Leaderboard.txt','a')
+        fi.write(str(self.player1.points)) #Enregistre le score Player1
+        fi.write(' ')
+        fi.write(self.player1.name) #Enregistre le nom Player1
+        fi.write('\n')
+        fi.write(str(self.player2.points)) #Enregistre le score Player2
+        fi.write(' ')
+        fi.write(self.player2.name) #Enregistre le nom Player2
+        fi.write('\n')
+        print('score enregistrer')
+        fi.close
 
     # Joue une partie complète
     def play(self):
@@ -245,6 +269,7 @@ class Game:
         print("----- Terminé -----")
         print(self.player1.name, "vous avez", self.player1.points, "points")
         print(self.player2.name,"vous avez", self.player2.points, "points")
+        self.StoreLeaderBoard()
 
     @staticmethod
     # retourne le moment où le jeu est censé être fini
