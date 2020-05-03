@@ -16,7 +16,7 @@
 - [ ] Enregistrer les tops joueurs [1] (dans un fichier [3])
 - [ ] Améliorer le jeu pour en faire un snake [4]
 
-Points potentiel : 10
+Points potentiel : 11
 
 ## CandyParty 
 Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
