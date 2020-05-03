@@ -11,7 +11,7 @@
 - [ ] Permettre de mettre le jeu en pause [3]
 - [ ] Améliorer les ennemis en leur donnant un peu d’intelligence (IA) [2]
 - [ ] Proposer un niveau de difficulté différent (plus de temps, des pénalités…) [2]
-- [ ] Empêcher de sortir du plateau [1]
+- [X] Empêcher de sortir du plateau [1]
 - [X] Permettre de passer à travers les murs et de réapparaitre de l’autre côté [2]
 - [ ] Enregistrer les tops joueurs [1] (dans un fichier [3])
 - [ ] Améliorer le jeu pour en faire un snake [4]
