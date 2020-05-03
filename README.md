@@ -9,14 +9,13 @@
 - [ ] Encapsuler les classes [1]
 - [ ] Utiliser des exceptions [2]
 - [ ] Permettre de mettre le jeu en pause [3]
-- [ ] Améliorer les ennemis en leur donnant un peu d’intelligence (IA) [2]
+- [X] Améliorer les ennemis en leur donnant un peu d’intelligence (IA) [2]
 - [ ] Proposer un niveau de difficulté différent (plus de temps, des pénalités…) [2]
 - [X] Empêcher de sortir du plateau [1]
 - [X] Permettre de passer à travers les murs et de réapparaitre de l’autre côté [2]
-- [ ] Enregistrer les tops joueurs [1] (dans un fichier [3])
+- [X] Enregistrer les tops joueurs [1] (dans un fichier [3])
 - [ ] Améliorer le jeu pour en faire un snake [4]
 
-Points potentiel : 11
 
 ## CandyParty 
 Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
