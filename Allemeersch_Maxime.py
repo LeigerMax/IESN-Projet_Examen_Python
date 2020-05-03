@@ -48,6 +48,11 @@ class Game:
         self.board_size = size
         self.candies = []
         self.candyPartyTrue = 0
+        self.choixLevel = 0
+        self.min = 0
+        self.sec = 0
+        self.WallPassOrNot = 0
+        self.candyPartyOrNOT = 0
 
 
     # Dessine le plateau
@@ -202,6 +207,7 @@ class Game:
 
 
         # Regarde s'il y a un enemy
+
     def check_Enemy(self):
         if self.player1.position == self.enemy1.position or self.player1.position == self.enemy2.position :
             if self.player1.points <= 10:
@@ -232,44 +238,108 @@ class Game:
         print('score enregistrer')
         fi.close
 
-    # Joue une partie complète
+    def displayLeaderboard(self):
+        print("--- Score ---")
+        fi = open('Leaderboard.txt','r')
+        lines = fi.readlines()
+        fi.close
+        for line in lines:
+            print(line.strip())
+        self.menu()
+
+    #LastPosition
+    def LastPosition(self):
+        self.player1.lastPosition = self.player1.position
+        self.player2.lastPosition = self.player2.position
+
+        # Joue une partie complète
+
+    def menu(self):
+        print("--- Menu ---")
+        print("Niveau Normal (1): 1min, 2 ennemi, mur bloquer et bonus")
+        print("Personnaliser (2) ")
+        print("Tableau des scores  (3) ")
+        self.choixLevel = int(input("Niveau : "))
+        if self.choixLevel == 1 :
+            self.play()
+        elif self.choixLevel == 2:
+            self.min = int(input("Combien de minute ?  : "))
+            self.sec = int(input("Combien de seconde ?  : "))
+            self.WallPassOrNot = int(
+                input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
+            self.candyPartyOrNOT = int(input("Permettre de mettre des bonus en jeu ? Oui (1) / Non (2) : "))
+            self.play()
+        elif self.choixLevel == 3 :
+            self.displayLeaderboard()
+
     def play(self):
-        print("--- Début de la partie ---")
-
-        self.draw()
-
-        end = Game.end_time(1, 0)
-        now = datetime.datetime.today()
-
-        while now < end:
-            self.enemy1.move()
-            self.enemy2.move()
-            self.player1.move()
-            print(self.player1.position)
-            #self.check_Position_TP()
-            self.check_Wall()
-            self.player2.move()
-            print(self.player2.position)
-            self.check_Wall()
-            #self.check_Position_TP()
-            self.check_candy()
-            self.check_Enemy()
-
-            if random.randint(1, 3) == 1:
-                self.pop_candy()
-
-            if self.candyPartyTrue == 1: #candyParty
-                self.candyPartyTrue = 0
-                self.pop_candyParty()
+        if self.choixLevel == 1 :
+            print("--- Début de la partie Normal ---")
 
             self.draw()
 
+            end = Game.end_time(1, 0)
             now = datetime.datetime.today()
+
+            while now < end:
+                self.enemy1.move()
+                self.enemy2.move()
+                self.player1.move()
+                self.check_Wall()
+                self.player2.move()
+                self.check_Wall()
+                self.check_candy()
+                self.check_Enemy()
+
+                if random.randint(1, 3) == 1:
+                    self.pop_candy()
+
+                if self.candyPartyTrue == 1:  # candyParty
+                    self.candyPartyTrue = 0
+                    self.pop_candyParty()
+
+                self.draw()
+
+                now = datetime.datetime.today()
+
+        elif self.choixLevel == 2 : #Try Catch
+            print("--- Début de la partie Personalisé ---")
+
+            self.draw()
+
+            end = Game.end_time(self.min, self.sec)
+            now = datetime.datetime.today()
+
+            while now < end:
+                self.enemy1.move()
+                self.enemy2.move()
+                self.player1.move()
+                self.player2.move()
+                if self.WallPassOrNot == 1 :
+                    self.check_Position_TP()
+                elif self.WallPassOrNot == 2:
+                    self.check_Wall()
+                self.check_Enemy()
+                self.check_candy()
+
+
+                if random.randint(1, 3) == 1:
+                    self.pop_candy()
+
+                if self.candyPartyOrNOT == 1 :
+                    if self.candyPartyTrue == 1: #candyParty
+                        self.candyPartyTrue = 0
+                        self.pop_candyParty()
+
+                self.draw()
+
+                now = datetime.datetime.today()
 
         print("----- Terminé -----")
         print(self.player1.name, "vous avez", self.player1.points, "points")
         print(self.player2.name,"vous avez", self.player2.points, "points")
         self.StoreLeaderBoard()
+        self.menu()
 
     @staticmethod
     # retourne le moment où le jeu est censé être fini
@@ -286,7 +356,7 @@ if __name__ == "__main__":
     e1 = Enemy("Enemy1",(7,2))
     e2 = Enemy("Enemy2",(7,7))
     g = Game(p1,p2,e1,e2)
-    g.play()
+    g.menu()
 
 
 
