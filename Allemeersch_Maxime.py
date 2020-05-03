@@ -46,12 +46,16 @@ class Game:
         self.enemy = enemy
         self.board_size = size
         self.candies = []
-        self.mur = []
         self.candyPartyTrue = 0
+
 
     # Dessine le plateau
     def draw(self):
+        for WalllineTop in range(self.board_size+2):
+            print("-", end=" ")
+        print()
         for line in range(self.board_size):
+            print("|", end=" ") #WalllineRight
             for col in range(self.board_size):
                 if (line, col) in self.candies:
                     print("*", end=" ")
@@ -61,9 +65,14 @@ class Game:
                     print("1", end=" ")
                 elif (line, col) == self.player2.position:
                     print("2", end=" ")
-                else:
+                else :
                     print(".", end=" ")
+
+            print("|", end=" ")  # WalllineLeft
             print()
+        for WalllineLow in range(self.board_size+2):
+            print("-", end=" ")
+        print()
 
     # Fait apparaitre un bonbon
     def pop_candy(self):
@@ -87,31 +96,63 @@ class Game:
         for CheckFirst in ListA :
             for CheckSecond in ListB:
                 if self.player1.position == (CheckFirst,CheckSecond): #Vers la gauche Player1
-                    self.player1.position = (CheckFirst,9)
-                elif self.player1.position == (CheckFirst, 10):  # Vers la droite Player1
+                    self.player1.position = (CheckFirst,self.board_size-1)
+                elif self.player1.position == (CheckFirst, self.board_size):  # Vers la droite Player1
                     self.player1.position = (CheckFirst, 0)
                 elif self.player1.position == (CheckSecond, CheckFirst): #Vers le Haut Player1
-                    self.player1.position = (9, CheckFirst)
-                elif self.player1.position == (10, CheckFirst):  # Vers le bas Player1
+                    self.player1.position = (self.board_size-1, CheckFirst)
+                elif self.player1.position == (self.board_size, CheckFirst):  # Vers le bas Player1
                     self.player1.position = (0, CheckFirst)
 
                 elif self.player2.position == (CheckFirst, CheckSecond): #Vers la gauche Player2
-                    self.player2.position = (CheckFirst, 9)
-                elif self.player2.position == (CheckFirst, 10):  # Vers la droite Player2
+                    self.player2.position = (CheckFirst, self.board_size-1)
+                elif self.player2.position == (CheckFirst, self.board_size):  # Vers la droite Player2
                     self.player2.position = (CheckFirst, 0)
                 elif self.player2.position == (CheckSecond, CheckFirst): #Vers le Haut Player2
-                    self.player2.position = (9, CheckFirst)
-                elif self.player2.position == (10, CheckFirst): #Vers le bas Player2
+                    self.player2.position = (self.board_size-1, CheckFirst)
+                elif self.player2.position == (self.board_size, CheckFirst): #Vers le bas Player2
                     self.player2.position = (0, CheckFirst)
 
                 elif self.enemy.position == (CheckFirst, CheckSecond): #Vers la gauche Enemy
-                    self.enemy.position = (CheckFirst, 9)
-                elif self.enemy.position == (CheckFirst, 10):  # Vers la droite Enemy
+                    self.enemy.position = (CheckFirst, self.board_size-1)
+                elif self.enemy.position == (CheckFirst, self.board_size):  # Vers la droite Enemy
                     self.enemy.position = (CheckFirst, 0)
                 elif self.enemy.position == (CheckSecond, CheckFirst): #Vers le Haut Enemy
-                    self.enemy.position = (9, CheckFirst)
-                elif self.enemy.position == (10, CheckFirst): #Vers le bas Enemy
+                    self.enemy.position = (self.board_size-1, CheckFirst)
+                elif self.enemy.position == (self.board_size, CheckFirst): #Vers le bas Enemy
                     self.enemy.position = (0, CheckFirst)
+
+    def check_Wall(self):
+        ListA = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        ListB = [-1, -2, -3, -4, -5, -6, -7, -8, -9, -10]
+        for CheckFirst in ListA:
+            for CheckSecond in ListB:
+                if self.player1.position == (CheckFirst, CheckSecond):  # Vers la gauche Player1
+                    self.player1.position = (CheckFirst, CheckSecond+1)
+                elif self.player1.position == (CheckFirst, self.board_size):  # Vers la droite Player1
+                    self.player1.position = (CheckFirst, self.board_size-1)
+                elif self.player1.position == (CheckSecond, CheckFirst):  # Vers le Haut Player1
+                    self.player1.position = (CheckSecond+1, CheckFirst)
+                elif self.player1.position == (self.board_size, CheckFirst):  # Vers le bas Player1
+                    self.player1.position = (self.board_size-1, CheckFirst)
+
+                elif self.player2.position == (CheckFirst, CheckSecond):  # Vers la gauche Player2
+                    self.player2.position = (CheckFirst, CheckSecond+1)
+                elif self.player2.position == (CheckFirst, self.board_size):  # Vers la droite Player2
+                    self.player2.position = (CheckFirst, self.board_size-1)
+                elif self.player2.position == (CheckSecond, CheckFirst):  # Vers le Haut Player2
+                    self.player2.position = (CheckSecond+1, CheckFirst)
+                elif self.player2.position == (self.board_size, CheckFirst):  # Vers le bas Player2
+                    self.player2.position = (self.board_size-1, CheckFirst)
+
+                elif self.enemy.position == (CheckFirst, CheckSecond):  # Vers la gauche Enemy
+                    self.enemy.position = (CheckFirst, CheckSecond+1)
+                elif self.enemy.position == (CheckFirst, self.board_size):  # Vers la droite Enemy
+                    self.enemy.position = (CheckFirst, self.board_size-1)
+                elif self.enemy.position == (CheckSecond, CheckFirst):  # Vers le Haut Enemy
+                    self.enemy.position = (CheckSecond+1, CheckFirst)
+                elif self.enemy.position == (self.board_size, CheckFirst):  # Vers le bas Enemy
+                    self.enemy.position = (self.board_size-1, CheckFirst)
 
     # Regarde s'il y a un bonbon à prendre (et le prend)
     def check_candy(self):
@@ -146,7 +187,8 @@ class Game:
 
     # Joue une partie complète
     def play(self):
-        print("--- Début de la partie ---") 
+        print("--- Début de la partie ---")
+
         self.draw()
 
         end = Game.end_time(1, 0)
@@ -156,9 +198,12 @@ class Game:
             self.enemy.move()
             self.player1.move()
             print(self.player1.position)
-            self.check_Position_TP()
+            #self.check_Position_TP()
+            self.check_Wall()
             self.player2.move()
-            self.check_Position_TP()
+            print(self.player2.position)
+            self.check_Wall()
+            #self.check_Position_TP()
             self.check_candy()
             self.check_Enemy()
 
