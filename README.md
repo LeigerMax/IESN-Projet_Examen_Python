@@ -20,5 +20,5 @@
 ## CandyParty 
 Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
 ## Enemy
-Dans le jeu de base nous avons deux ennemi qui se balada aléatoirement sur la carte, une fois que celui-ci touche un bonbon, le bonbon est mangé. Si l'ennemi touche un joueur celui-ci perd 2 points.
+Dans le jeu de base nous avons deux ennemis qui se balada aléatoirement sur la carte, une fois que celui-ci touche un bonbon, le bonbon est mangé. Si l'ennemi touche un joueur celui-ci perd 2 points. Si le joueur toucher à plus de 10 points, il perd tous ses points ! 
 
