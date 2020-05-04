@@ -7,7 +7,7 @@
 - [x] Donner des valeurs différentes aux bonbons récoltés (éventuellement malus) [1] 
 - [x] Ajouter des bonbons bonus (par exemple faire apparaitre pleins de bonbons) [2]
 - [X] Encapsuler les classes [1]
-- [ ] Utiliser des exceptions [2]
+- [X] Utiliser des exceptions [2]
 - [ ] Permettre de mettre le jeu en pause [3]
 - [X] Améliorer les ennemis en leur donnant un peu d’intelligence (IA) [2]
 - [X] Proposer un niveau de difficulté différent (plus de temps, des pénalités…) [2]
