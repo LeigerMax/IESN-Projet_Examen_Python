@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- Create By Allemeersch Maxime -*-
 
 import random
 import datetime
@@ -40,7 +41,7 @@ class Player:
         while key not in Player.keyboard_key.keys():
             key = input(" Erreur : Mouvement (z,q,s,d) : ")
         move = Player.keyboard_key[key]
-        self.position = (self.position[0] + move[0], self.position[1] + move[1])
+        self._position = (self._position[0] + move[0], self._position[1] + move[1])
 
 class Enemy:
     keyboard_key = {'z': (-1, 0),
@@ -61,7 +62,7 @@ class Enemy:
     def move(self):
         key = random.choice('zqsd')
         move = Enemy.keyboard_key[key]
-        self.position = (self.position[0] + move[0], self.position[1] + move[1])
+        self._position = (self._position[0] + move[0], self._position[1] + move[1])
 
 class Game:
 
@@ -73,12 +74,11 @@ class Game:
         self._board_size = size
         self._candies = []
         self._candyPartyTrue = 0
-        self._choixLevel = 0
+        self._choiceLevel = 0
         self._min = 0
         self._sec = 0
         self._wallPassOrNot = 0
         self._candyPartyOrNOT = 0
-
 
     @property
     def player1(self):
@@ -130,16 +130,16 @@ class Game:
         self._candyPartyTrue = new_candyPartyTrue
 
     @property
-    def choixLevel(self):
-        return self._choixLevel
-    @choixLevel.setter
-    def choixLevel(self, new_choixLevel):
-        self._choixLevel = new_choixLevel
+    def choiceLevel(self):
+        return self._choiceLevel
+    @choiceLevel.setter
+    def choiceLevel(self, new_choiceLevel):
+        self._choiceLevel = new_choiceLevel
 
     @property
     def min(self):
         return self._min
-    @choixLevel.setter
+    @min.setter
     def min(self, new_min):
         self._min = new_min
 
@@ -152,7 +152,7 @@ class Game:
 
     @property
     def wallPassOrNot(self):
-        return self._WallPassOrNot
+        return self._wallPassOrNot
     @wallPassOrNot.setter
     def wallPassOrNot(self, new_wallPassOrNot):
         self._wallPassOrNot = new_wallPassOrNot
@@ -167,25 +167,23 @@ class Game:
     #Dessine le plateau
     def draw(self):
         for wallLineTop in range(self._board_size):
-            print("◼", end=" ")
-            #print("\033[36;1m◼\033[0m", end=" ") #wallLineTop
+            print("◼", end=" ") #wallLineTop
+            #print("\033[36;1m◼\033[0m", end=" ") #wallLineTop Color
         print()
+
         for line in range(self._board_size):
-            print("◼", end=" ")
-            #print("\033[36;1m◼\033[0m", end=" ") #wallLineRight
+            print("◼", end=" ") #wallLineRight
+            #print("\033[36;1m◼\033[0m", end=" ") #wallLineRight Color
             for col in range(self._board_size):
-                if (line, col) in self.candies:
+                if (line, col) in self._candies:
                     print("O", end=" ")
                     #print("\033[35;1mO\033[0m", end=" ")  #Ici j'ai voulu mettre des couleurs, cependant les couleurs ne fonctionne pas avec IDLE python.
-                    #print("\033[35;1m🍬\033[0m", end=" ") #J'ai voulu mettre des emoji afin de représenter les bonbons et les ennemis, cependant, le taille était beaucoup trop grosse, ce qui provoque des décalages au niveau des murs
                 elif (line, col) == self.enemy1._position:
                     print("X", end=" ")
                     #print("\033[31;1mX\033[0m", end=" ")
-                    # print("\033[35;1m💀\033[0m", end=" ")
                 elif (line, col) == self.enemy2._position:
                     print("X", end=" ")
                     #print("\033[31;1mX\033[0m", end=" ")
-                    # print("\033[35;1m💀\033[0m", end=" ")
                 elif (line, col) == self.player1._position:
                     print("1", end=" ")
                     #print("\033[32;1m1\033[0m", end=" ")
@@ -196,11 +194,11 @@ class Game:
                     print(".", end=" ")
 
             print("◼", end=" ")  #wallLineLeft
-            #print("\033[36;1m◼\033[0m", end=" ")  # wallLineLeft
+            #print("\033[36;1m◼\033[0m", end=" ")  # wallLineLeft Color
             print()
         for wallLineLow in range(self._board_size):
-            print("◼", end=" ")
-            #print("\033[36;1m◼\033[0m", end=" ") #wallLineLow
+            print("◼", end=" ") #wallLineLow
+            #print("\033[36;1m◼\033[0m", end=" ") #wallLineLow Color
         print()
 
     #Fait apparaitre un bonbon
@@ -212,14 +210,14 @@ class Game:
     #CandyParty
     def pop_candyParty(self):
         candytSpawn = random.randint(1, 5)
-        print("Vous avez trouver un bonbon magique ! ", candytSpawn, " bonbons ont apparut")
+        print("Vous avez trouvé un bonbon magique ! ", candytSpawn, " bonbons ont apparut")
         while (candytSpawn != 0):
             new_candy = (random.choice(range(self._board_size)), random.choice(range(self._board_size)))
             if new_candy not in self._candies and new_candy not in self.player1._position and new_candy not in self.enemy1._position and new_candy not in self.enemy2._position:
                 self._candies.append(new_candy)
             candytSpawn = candytSpawn -1
 
-    #Permet au joueur de se téléporter à l'opposé
+    #Permet au joueur de ce téléporter à l'opposer
     def check_Position_TP(self):
         ListA = [0,1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         ListB = [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10]
@@ -235,7 +233,7 @@ class Game:
                     self.player1._position = (0, CheckFirst)
 
                 elif self.player2._position == (CheckFirst, CheckSecond): #Vers la gauche Player2
-                    self.player2.position = (CheckFirst, self._board_size-1)
+                    self.player2._position = (CheckFirst, self._board_size-1)
                 elif self.player2._position == (CheckFirst, self._board_size):  # Vers la droite Player2
                     self.player2._position = (CheckFirst, 0)
                 elif self.player2._position == (CheckSecond, CheckFirst): #Vers le Haut Player2
@@ -327,7 +325,7 @@ class Game:
             self._candies.remove(self.enemy2._position)
 
 
-    #Regarde s'il y a un enemy
+    #Regarde s'il y a un ennemi
     def check_Enemy(self):
         if self.player1._position == self.enemy1._position or self.player1._position == self.enemy2._position :
             if self.player1._points <= 10:
@@ -374,19 +372,19 @@ class Game:
         print("Personnalisé (2) ")
         print("Tableau des scores  (3) ")
         try:
-            self._choixLevel = int(input("Niveau : "))
-            while self._choixLevel != 1 and self._choixLevel != 2 and self._choixLevel != 3:
-                self._choixLevel = int(input("Numéro invalide! Niveau : "))
-            if self._choixLevel == 1 :
+            self._choiceLevel = int(input("Niveau : "))
+            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3:
+                self._choiceLevel = int(input("Numéro invalide! Niveau : "))
+            if self._choiceLevel == 1 :
                 self.play()
-            elif self._choixLevel == 2:
+            elif self._choiceLevel == 2:
                 self._min = int(input("Combien de minute ?  : "))
                 self._sec = int(input("Combien de seconde ?  : "))
                 self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
                 self._candyPartyOrNOT = int(input("Permettre de mettre des bonus en jeu ? Oui (1) / Non (2) : "))
                 #self._board_size = int(input("Taille du plateau : "))
                 self.play()
-            elif self._choixLevel == 3 :
+            elif self._choiceLevel == 3 :
                 self.displayLeaderboard()
         except ValueError:
             print("Valeur incorrect, vous avez rentré une lettre ou un autre caractère ! \n")
@@ -394,7 +392,7 @@ class Game:
 
     # Joue une partie complète
     def play(self):
-        if self._choixLevel == 1 :
+        if self._choiceLevel == 1 :
             print("--- Début de la partie Normal ---")
 
             self.draw()
@@ -403,12 +401,12 @@ class Game:
             now = datetime.datetime.today()
 
             while now < end:
-                self.enemy1.move()
-                self.enemy2.move()
                 self.player1.move()
                 self.check_Wall()
                 self.player2.move()
                 self.check_Wall()
+                self.enemy1.move()
+                self.enemy2.move()
                 self.check_candy()
                 self.check_Enemy()
 
@@ -424,7 +422,7 @@ class Game:
 
                 now = datetime.datetime.today()
 
-        elif self._choixLevel == 2 : #Try Catch
+        elif self._choiceLevel == 2 : #Try Catch
             print("--- Début de la partie Personalisé ---")
 
             self.draw()
@@ -433,10 +431,10 @@ class Game:
             now = datetime.datetime.today()
 
             while now < end:
-                self.enemy1.move()
-                self.enemy2.move()
                 self.player1.move()
                 self.player2.move()
+                self.enemy1.move()
+                self.enemy2.move()
                 if self._wallPassOrNot == 1 :
                     self.check_Position_TP()
                 elif self._wallPassOrNot == 2:
@@ -448,9 +446,9 @@ class Game:
                 if random.randint(1, 3) == 1:
                     self.pop_candy()
 
-                if self.candyPartyOrNOT == 1 :
-                    if self.candyPartyTrue == 1: #candyParty
-                        self.candyPartyTrue = 0
+                if self._candyPartyOrNOT == 1 :
+                    if self._candyPartyTrue == 1: #candyParty
+                        self._candyPartyTrue = 0
                         self.pop_candyParty()
 
                 self.draw()
