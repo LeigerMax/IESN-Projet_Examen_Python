@@ -368,26 +368,29 @@ class Game:
     #Menu
     def menu(self):
         print("--- Menu ---")
-        print("Niveau Normal (1): 1min, 2 ennemi, mur bloquer et bonus")
-        print("Personnalisé (2) ")
-        print("Tableau des scores  (3) ")
+        print("Niveau Normal (1): 1min, 2 ennemis, mur bloquer et bonus")
+        print("Difficle (2) : 1min, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé")
+        print("Personnalisé (3) ")
+        print("Tableau des scores  (4) ")
         try:
             self._choiceLevel = int(input("Niveau : "))
-            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3:
+            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4:
                 self._choiceLevel = int(input("Numéro invalide! Niveau : "))
             if self._choiceLevel == 1 :
                 self.play()
-            elif self._choiceLevel == 2:
+            if self._choiceLevel == 2:
+                self.play()
+            elif self._choiceLevel == 3:
                 self._min = int(input("Combien de minute ?  : "))
                 self._sec = int(input("Combien de seconde ?  : "))
                 self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
                 self._candyPartyOrNOT = int(input("Permettre de mettre des bonus en jeu ? Oui (1) / Non (2) : "))
                 #self._board_size = int(input("Taille du plateau : "))
                 self.play()
-            elif self._choiceLevel == 3 :
+            elif self._choiceLevel == 4 :
                 self.displayLeaderboard()
         except ValueError:
-            print("Valeur incorrect, vous avez rentré une lettre ou un autre caractère ! \n")
+            print("Valeur incorrect ! \n")
             self.menu()
 
     # Joue une partie complète
@@ -402,9 +405,9 @@ class Game:
 
             while now < end:
                 self.player1.move()
-                self.check_Wall()
                 self.player2.move()
                 self.check_Wall()
+                self.check_candy()
                 self.enemy1.move()
                 self.enemy2.move()
                 self.check_candy()
@@ -419,10 +422,46 @@ class Game:
 
                 self.draw()
 
+                now = datetime.datetime.today()
+
+        if self._choiceLevel == 2 :
+            print("--- Début de la partie Difficile ---")
+
+            self.draw()
+
+            end = Game.end_time(1, 0)
+            now = datetime.datetime.today()
+
+            while now < end:
+                self.player1.move()
+                self.player2.move()
+                self.check_Wall()
+                self.check_candy()
+
+                i = 0
+                while i != 3 :
+                    self.enemy1.move()
+                    self.check_Enemy()
+                    self.check_Wall()
+                    self.check_candy()
+                    i = i + 1
+
+                i = 0
+                while i != 3 :
+                    self.enemy2.move()
+                    self.check_Enemy()
+                    self.check_Wall()
+                    self.check_candy()
+                    i = i +1
+
+                if random.randint(1, 5) == 1:
+                    self.pop_candy()
+
+                self.draw()
 
                 now = datetime.datetime.today()
 
-        elif self._choiceLevel == 2 : #Try Catch
+        elif self._choiceLevel == 3 :
             print("--- Début de la partie Personalisé ---")
 
             self.draw()
@@ -433,15 +472,15 @@ class Game:
             while now < end:
                 self.player1.move()
                 self.player2.move()
+                self.check_candy()
                 self.enemy1.move()
                 self.enemy2.move()
-                if self._wallPassOrNot == 1 :
+                self.check_Enemy()
+                self.check_candy()
+                if self._wallPassOrNot == 1:
                     self.check_Position_TP()
                 elif self._wallPassOrNot == 2:
                     self.check_Wall()
-                self.check_Enemy()
-                self.check_candy()
-
 
                 if random.randint(1, 3) == 1:
                     self.pop_candy()
