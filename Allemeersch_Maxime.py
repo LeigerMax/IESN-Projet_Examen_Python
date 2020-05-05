@@ -79,6 +79,7 @@ class Game:
         self._sec = 0
         self._wallPassOrNot = 0
         self._candyPartyOrNOT = 0
+        self._candyOutOfDateOrNot = 0
 
     @property
     def player1(self):
@@ -163,6 +164,13 @@ class Game:
     @candyPartyOrNOT.setter
     def candyPartyOrNOT(self, new_candyPartyOrNOT):
         self._candyPartyOrNOT = new_candyPartyOrNOT
+
+    @property
+    def candyOutOfDateOrNot(self):
+        return self._candyOutOfDateOrNot
+    @candyOutOfDateOrNot.setter
+    def candyOutOfDateOrNot(self, new_candyOutOfDateOrNot):
+        self._candyOutOfDateOrNot = new_candyOutOfDateOrNot
 
     #Dessine le plateau
     def draw(self):
@@ -319,10 +327,23 @@ class Game:
             if (CandyPartyTrue >= 4) :
                 self._candyPartyTrue = 1
 
-        if self.enemy1._position in self._candies:
+        if self.enemy1._position in self._candies or self.enemy2._position in self._candies:
             self._candies.remove(self.enemy1._position)
-        if self.enemy2._position in self._candies:
-            self._candies.remove(self.enemy2._position)
+
+    #Regarde s'il y a un bonbon périmé à prendre (et le prend)
+    def check_candy_out_of_date(self):
+        if self.player1._position in self._candies:
+            print("Non ! ",self.player1._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
+            self.player1._points -= 5
+            self._candies.remove(self.player1._position)
+
+        if self.player2._position in self._candies:
+            print("Non ! ",self.player2._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
+            self.player2._points -= 5
+            self._candies.remove(self.player2._position)
+
+        if self.enemy1._position in self._candies or self.enemy2._position in self._candies:
+            self._candies.remove(self.enemy1._position)
 
 
     #Regarde s'il y a un ennemi
@@ -370,8 +391,8 @@ class Game:
         print("--- Menu ---")
         print("Niveau Normal (1): 1min, 2 ennemis, mur bloquer et bonus")
         print("Difficle (2) : 1min, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé")
-        print("Personnalisé (3) ")
-        print("Tableau des scores  (4) ")
+        print("Personnalisé (3) : Paramétrer la partie ")
+        print("Tableau des scores (4) ")
         try:
             self._choiceLevel = int(input("Niveau : "))
             while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4:
@@ -385,7 +406,7 @@ class Game:
                 self._sec = int(input("Combien de seconde ?  : "))
                 self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
                 self._candyPartyOrNOT = int(input("Permettre de mettre des bonus en jeu ? Oui (1) / Non (2) : "))
-                #self._board_size = int(input("Taille du plateau : "))
+                self._candyOutOfDateOrNot = int(input("Permettre de mettre des malus en jeu ? Oui (1) / Non (2) : "))
                 self.play()
             elif self._choiceLevel == 4 :
                 self.displayLeaderboard()
@@ -436,6 +457,8 @@ class Game:
                 self.player1.move()
                 self.player2.move()
                 self.check_Wall()
+                if random.randint(1, 4) == 1:
+                    self.check_candy_out_of_date()
                 self.check_candy()
 
                 i = 0
@@ -472,6 +495,9 @@ class Game:
             while now < end:
                 self.player1.move()
                 self.player2.move()
+                if self._candyOutOfDateOrNot == 1 :
+                    if random.randint(1, 5) == 1:
+                        self.check_candy_out_of_date()
                 self.check_candy()
                 self.enemy1.move()
                 self.enemy2.move()
