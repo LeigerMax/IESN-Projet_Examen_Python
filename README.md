@@ -4,7 +4,8 @@ Il s’agit d’un petit jeu de plateau (de 10 cases par défaut) sur lequel un 
 récupérer des bonbons qui apparaissent aléatoirement. Le joueur à une minute pour en récolter le
 plus possible.
 Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
-Dans le jeu de base nous avons deux ennemis qui se balada aléatoirement sur la carte, une fois que celui-ci touche un bonbon, le bonbon est mangé. Si l'ennemi touche un joueur celui-ci perd 2 points. Si le joueur toucher à plus de 10 points, il perd tous ses points ! 
+Dans le jeu de base nous avons deux ennemis qui se balade aléatoirement sur la carte, une fois que celui-ci touche un bonbon, le bonbon est mangé. Si l'ennemi touche un joueur celui-ci perd 2 points. Si le joueur toucher à plus de 10 points, il perd tous ses points !
+
 
 ## Tache à faire 
 - [ ] Empêcher le joueur de revenir en arrière [1]
@@ -23,7 +24,7 @@ Dans le jeu de base nous avons deux ennemis qui se balada aléatoirement sur la 
 - [ ] Améliorer le jeu pour en faire un snake [4]
 - [X] Mettre des couleurs (Fonctionne que avec PyCharm)
 - [ ] Bonbon avec malus
-- [ ] Mode normal, difficile , personnalisé
+- [X] Mode normal, difficile , personnalisé
 
 ## Player
 La Classe Player permet de créer des joueurs, elle permet de gérer les déplacements, les points et les noms des joueurs.
@@ -52,8 +53,9 @@ Permet d'ouvrir le fichier qui contient les scores et l'afficher.
 ### Menu
 Permet de créer un menu dès le lancement du jeu. Il affiche différente option de lancement : 
   * Normal (1) : 1 minute, 2 ennemis, mur bloquer et bonbon magique.
-  * Personalisé (2) : Permet de personaliser sa partie comme le joueur souhaite. 
-  * Tableau des score (3) : Afficher le tableau des scores.
+  * Difficile (2) : 1 minute, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé.
+  * Personalisé (3) : Permet de personaliser sa partie comme le joueur souhaite. 
+  * Tableau des score (4) : Afficher le tableau des scores.
 ### play
 Permet de lancer le jeu par rapport aux paramètres que nous avons choisis.
 ### end_time
