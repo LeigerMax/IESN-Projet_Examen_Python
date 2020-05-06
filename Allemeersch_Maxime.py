@@ -317,18 +317,17 @@ class Game:
             print(self.player1._name ,"+",pointsWin, "point(s)")
             self.player1._points += pointsWin
             self._candies.remove(self.player1._position)
-            if (CandyPartyTrue >= 4) :
-                self._candyPartyTrue = 1
 
         if self.player2._position in self._candies:
             print(self.player2._name ,"+",pointsWin, "point(s)")
             self.player2._points += pointsWin
             self._candies.remove(self.player2._position)
-            if (CandyPartyTrue >= 4) :
-                self._candyPartyTrue = 1
 
         if self.enemy1._position in self._candies or self.enemy2._position in self._candies:
             self._candies.remove(self.enemy1._position)
+
+        if (CandyPartyTrue >= 4):
+            self._candyPartyTrue = 1
 
     #Regarde s'il y a un bonbon périmé à prendre (et le prend)
     def check_candy_out_of_date(self):
@@ -397,7 +396,7 @@ class Game:
             self._choiceLevel = int(input("Niveau : "))
             while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4:
                 self._choiceLevel = int(input("Numéro invalide! Niveau : "))
-            if self._choiceLevel == 1 :
+            if self._choiceLevel == 1:
                 self.play()
             if self._choiceLevel == 2:
                 self.play()
@@ -405,8 +404,8 @@ class Game:
                 self._min = int(input("Combien de minute ?  : "))
                 self._sec = int(input("Combien de seconde ?  : "))
                 self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
-                self._candyPartyOrNOT = int(input("Permettre de mettre des bonus en jeu ? Oui (1) / Non (2) : "))
-                self._candyOutOfDateOrNot = int(input("Permettre de mettre des malus en jeu ? Oui (1) / Non (2) : "))
+                self._candyPartyOrNOT = int(input("Mettre des bonus en jeu ? Oui (1) / Non (2) : "))
+                self._candyOutOfDateOrNot = int(input("Mettre des malus en jeu ? Oui (1) / Non (2) : "))
                 self.play()
             elif self._choiceLevel == 4 :
                 self.displayLeaderboard()
@@ -416,7 +415,7 @@ class Game:
 
     # Joue une partie complète
     def play(self):
-        if self._choiceLevel == 1 :
+        if self._choiceLevel == 1:
             print("--- Début de la partie Normal ---")
 
             self.draw()
@@ -427,10 +426,10 @@ class Game:
             while now < end:
                 self.player1.move()
                 self.player2.move()
-                self.check_Wall()
                 self.check_candy()
                 self.enemy1.move()
                 self.enemy2.move()
+                self.check_Wall()
                 self.check_candy()
                 self.check_Enemy()
 
@@ -445,7 +444,7 @@ class Game:
 
                 now = datetime.datetime.today()
 
-        if self._choiceLevel == 2 :
+        if self._choiceLevel == 2:
             print("--- Début de la partie Difficile ---")
 
             self.draw()
@@ -456,25 +455,25 @@ class Game:
             while now < end:
                 self.player1.move()
                 self.player2.move()
-                self.check_Wall()
                 if random.randint(1, 4) == 1:
                     self.check_candy_out_of_date()
                 self.check_candy()
+                self.check_Wall()
 
                 i = 0
                 while i != 3 :
                     self.enemy1.move()
                     self.check_Enemy()
-                    self.check_Wall()
                     self.check_candy()
+                    self.check_Wall()
                     i = i + 1
 
                 i = 0
                 while i != 3 :
                     self.enemy2.move()
                     self.check_Enemy()
-                    self.check_Wall()
                     self.check_candy()
+                    self.check_Wall()
                     i = i +1
 
                 if random.randint(1, 5) == 1:
@@ -484,7 +483,7 @@ class Game:
 
                 now = datetime.datetime.today()
 
-        elif self._choiceLevel == 3 :
+        elif self._choiceLevel == 3:
             print("--- Début de la partie Personalisé ---")
 
             self.draw()
