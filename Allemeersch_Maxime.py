@@ -74,6 +74,7 @@ class Game:
         self._board_size = size
         self._candies = []
         self._candyPartyTrue = 0
+        self._candyPartyNumberCandy = 0
         self._choiceLevel = 0
         self._min = 0
         self._sec = 0
@@ -131,6 +132,13 @@ class Game:
         self._candyPartyTrue = new_candyPartyTrue
 
     @property
+    def candyPartyNumberCandy(self):
+        return self._candyPartyNumberCandy
+    @candyPartyNumberCandy.setter
+    def candyPartyNumberCandy(self, new_candyPartyNumberCandy):
+        self._candyPartyNumberCandy = new_candyPartyNumberCandy
+
+    @property
     def choiceLevel(self):
         return self._choiceLevel
     @choiceLevel.setter
@@ -184,20 +192,20 @@ class Game:
             #print("\033[36;1m◼\033[0m", end=" ") #wallLineRight Color
             for col in range(self._board_size):
                 if (line, col) in self._candies:
-                    print("O", end=" ")
+                    print("*", end=" ")
                     #print("\033[35;1mO\033[0m", end=" ")  #Ici j'ai voulu mettre des couleurs, cependant les couleurs ne fonctionne pas avec IDLE python.
-                elif (line, col) == self.enemy1._position:
-                    print("X", end=" ")
-                    #print("\033[31;1mX\033[0m", end=" ")
-                elif (line, col) == self.enemy2._position:
-                    print("X", end=" ")
-                    #print("\033[31;1mX\033[0m", end=" ")
                 elif (line, col) == self.player1._position:
                     print("1", end=" ")
                     #print("\033[32;1m1\033[0m", end=" ")
                 elif (line, col) == self.player2._position:
                     print("2", end=" ")
                     #print("\033[34;1m2\033[0m", end=" ")
+                elif (line, col) == self.enemy1._position:
+                    print("X", end=" ")
+                    #print("\033[31;1mX\033[0m", end=" ")
+                elif (line, col) == self.enemy2._position:
+                    print("X", end=" ")
+                    #print("\033[31;1mX\033[0m", end=" ")
                 else :
                     print(".", end=" ")
 
@@ -224,6 +232,49 @@ class Game:
             if new_candy not in self._candies and new_candy not in self.player1._position and new_candy not in self.enemy1._position and new_candy not in self.enemy2._position:
                 self._candies.append(new_candy)
             candytSpawn = candytSpawn -1
+
+    #Regarde s'il y a un bonbon à prendre (et le prend)
+    def check_candy(self):
+        pointsWin = random.randint(1, 3)
+        if self.player1._position in self._candies:
+            print(self.player1._name ,"+",pointsWin, "point(s)")
+            self.player1._points += pointsWin
+            self._candies.remove(self.player1._position)
+            self.candyPartyNumberCandy = random.randint(1, 5)
+
+        if self.player2._position in self._candies:
+            print(self.player2._name ,"+",pointsWin, "point(s)")
+            self.player2._points += pointsWin
+            self._candies.remove(self.player2._position)
+            self.candyPartyNumberCandy = random.randint(1, 5)
+
+        if self.enemy1._position in self._candies :
+            self._candies.remove(self.enemy1._position)
+
+        if self.enemy2._position in self._candies:
+            self._candies.remove(self.enemy2._position)
+
+        if self.candyPartyNumberCandy >= 5:
+            self.candyPartyNumberCandy = 0 #Je remet à 0 pour éviter que les ennemis prend un bonbon et remet des bonbons bonus
+            self._candyPartyTrue = 1
+
+    #Regarde s'il y a un bonbon périmé à prendre (et le prend)
+    def check_candy_out_of_date(self):
+        if self.player1._position in self._candies:
+            print("Non ! ",self.player1._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
+            self.player1._points -= 5
+            self._candies.remove(self.player1._position)
+
+        if self.player2._position in self._candies:
+            print("Non ! ",self.player2._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
+            self.player2._points -= 5
+            self._candies.remove(self.player2._position)
+
+        if self.enemy1._position in self._candies:
+            self._candies.remove(self.enemy1._position)
+
+        if self.enemy2._position in self._candies:
+            self._candies.remove(self.enemy2._position)
 
     #Permet au joueur de ce téléporter à l'opposer
     def check_Position_TP(self):
@@ -309,42 +360,6 @@ class Game:
                 elif self.enemy2._position == (self._board_size, CheckFirst):  # Vers le bas Enemy
                     self.enemy2._position = (self._board_size-1, CheckFirst)
 
-    #Regarde s'il y a un bonbon à prendre (et le prend)
-    def check_candy(self):
-        pointsWin = random.randint(1, 3)
-        CandyPartyTrue = random.randint(1, 5)
-        if self.player1._position in self._candies:
-            print(self.player1._name ,"+",pointsWin, "point(s)")
-            self.player1._points += pointsWin
-            self._candies.remove(self.player1._position)
-
-        if self.player2._position in self._candies:
-            print(self.player2._name ,"+",pointsWin, "point(s)")
-            self.player2._points += pointsWin
-            self._candies.remove(self.player2._position)
-
-        if self.enemy1._position in self._candies or self.enemy2._position in self._candies:
-            self._candies.remove(self.enemy1._position)
-
-        if (CandyPartyTrue >= 4):
-            self._candyPartyTrue = 1
-
-    #Regarde s'il y a un bonbon périmé à prendre (et le prend)
-    def check_candy_out_of_date(self):
-        if self.player1._position in self._candies:
-            print("Non ! ",self.player1._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
-            self.player1._points -= 5
-            self._candies.remove(self.player1._position)
-
-        if self.player2._position in self._candies:
-            print("Non ! ",self.player2._name , " a perdu - 5 points , car il a mangé un bonbon périmé")
-            self.player2._points -= 5
-            self._candies.remove(self.player2._position)
-
-        if self.enemy1._position in self._candies or self.enemy2._position in self._candies:
-            self._candies.remove(self.enemy1._position)
-
-
     #Regarde s'il y a un ennemi
     def check_Enemy(self):
         if self.player1._position == self.enemy1._position or self.player1._position == self.enemy2._position :
@@ -393,19 +408,22 @@ class Game:
         print("Personnalisé (3) : Paramétrer la partie ")
         print("Tableau des scores (4) ")
         try:
-            self._choiceLevel = int(input("Niveau : "))
+            self._choiceLevel = int(input("Choix : "))
             while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4:
-                self._choiceLevel = int(input("Numéro invalide! Niveau : "))
+                self._choiceLevel = int(input("Numéro invalide! Choix : "))
             if self._choiceLevel == 1:
                 self.play()
-            if self._choiceLevel == 2:
+            elif self._choiceLevel == 2:
                 self.play()
             elif self._choiceLevel == 3:
                 self._min = int(input("Combien de minute ?  : "))
                 self._sec = int(input("Combien de seconde ?  : "))
-                self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
-                self._candyPartyOrNOT = int(input("Mettre des bonus en jeu ? Oui (1) / Non (2) : "))
-                self._candyOutOfDateOrNot = int(input("Mettre des malus en jeu ? Oui (1) / Non (2) : "))
+                while self._wallPassOrNot != 1 and self._wallPassOrNot != 2 :
+                    self._wallPassOrNot = int(input("Permettre de passer à travers les murs et de réapparaitre de l’autre côté ? Oui (1) / Non (2) : "))
+                while self._candyPartyOrNOT != 1 and self._candyPartyOrNOT != 2:
+                    self._candyPartyOrNOT = int(input("Mettre des bonus en jeu ? Oui (1) / Non (2) : "))
+                while self._candyOutOfDateOrNot != 1 and self._candyOutOfDateOrNot != 2:
+                    self._candyOutOfDateOrNot = int(input("Mettre des malus en jeu ? Oui (1) / Non (2) : "))
                 self.play()
             elif self._choiceLevel == 4 :
                 self.displayLeaderboard()
@@ -436,7 +454,7 @@ class Game:
                 if random.randint(1, 3) == 1:
                     self.pop_candy()
 
-                if self.candyPartyTrue == 1:  # candyParty
+                if self._candyPartyTrue == 1:  # candyParty
                     self._candyPartyTrue = 0
                     self.pop_candyParty()
 
@@ -463,20 +481,14 @@ class Game:
                 i = 0
                 while i != 3 :
                     self.enemy1.move()
-                    self.check_Enemy()
-                    self.check_candy()
-                    self.check_Wall()
-                    i = i + 1
-
-                i = 0
-                while i != 3 :
                     self.enemy2.move()
                     self.check_Enemy()
                     self.check_candy()
                     self.check_Wall()
-                    i = i +1
+                    print(i)
+                    i = i + 1
 
-                if random.randint(1, 5) == 1:
+                if random.randint(1, 3) == 1:
                     self.pop_candy()
 
                 self.draw()
@@ -495,7 +507,7 @@ class Game:
                 self.player1.move()
                 self.player2.move()
                 if self._candyOutOfDateOrNot == 1 :
-                    if random.randint(1, 5) == 1:
+                    if random.randint(1, 6) == 1:
                         self.check_candy_out_of_date()
                 self.check_candy()
                 self.enemy1.move()
@@ -520,8 +532,8 @@ class Game:
                 now = datetime.datetime.today()
 
         print("----- Terminé -----")
-        print(self.player1.name, "vous avez", self.player1._points, "points")
-        print(self.player2.name,"vous avez", self.player2._points, "points")
+        print(self.player1._name, "vous avez", self.player1._points, "points")
+        print(self.player2._name,"vous avez", self.player2._points, "points")
         self.storeLeaderBoard()
         #self.menu()
 
