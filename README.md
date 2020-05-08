@@ -37,13 +37,15 @@ Permet de dessiner le plateau de jeu, le plateau fait 10*10. Il dessine égaleme
 ### pop_candy 
 Fait apparaitre un bonbon dans une position random dans le plateau.
 ### pop_candyParty 
-La fonction ici permet de choisir entre 1 et 5 bonbon(s) random qui vont apparaitre sur le plateau
+La fonction ici permet de choisir entre 1 et 5 bonbon(s) random qui vont apparaitre sur le plateau.
+### check_candy
+Cette fonction regarde s'il y a un bonbon à prendre et le prend s'il en a un. En le prenant les joueurs peuvent gagner des points, entre 1 et 3. Si c'est un ennemi qui le prend, il sera détruit. Il permet également de choisir si un bonbon est magique ou pas.
+### check_candy_out_of_date
+Permet de retirer 5 points si le joueur tombe sur un bonbon périmé.
 ### check_Position_TP
 Cette fonction permet de passer à travers les murs et de réapparaitre de l’autre côté. Elle fonctionne pour les deux joueurs et les ennemis.
 ### check_Wall
 La fonction permet de bloquer les joueurs et les ennemis quand ils tentent de traverser un mur.
-### check_candy
-Cette fonction regarde s'il y a un bonbon à prendre et le prend s'il en a un. En le prenant les joueurs peuvent gagner des points, entre 1 et 3. Si c'est un ennemi qui le prend, il sera détruit. Il permet également de choisir si un bonbon est magique ou pas 
 ### check_Enemy
 Cette fonction permet de vérifier si un ennemi touche un joueur ou pas. S"il le touche il lui enlève 2 points. Si le joueur à plus de 10 points l'ennemi lui prendra tous ses points.
 ### storeLeaderBoard
