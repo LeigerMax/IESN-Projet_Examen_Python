@@ -23,7 +23,7 @@ Dans le jeu de base nous avons deux ennemis qui se balade aléatoirement sur la 
 - [X] Enregistrer les tops joueurs [1] (dans un fichier [3]) et l'afficher via le jeu
 - [ ] Améliorer le jeu pour en faire un snake [4]
 - [X] Mettre des couleurs (Fonctionne que avec PyCharm)
-- [ ] Bonbon avec malus
+- [X] Bonbon avec malus
 - [X] Mode normal, difficile , personnalisé
 
 ## Player
