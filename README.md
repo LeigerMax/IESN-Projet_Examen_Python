@@ -60,7 +60,7 @@ Affiche le ficher Readme.
 Permet de créer un menu dès le lancement du jeu. Il affiche différente option de lancement : 
   * Normal (1) : 1 minute, 2 ennemis, mur bloquer et bonbon magique.
   * Difficile (2) : 1 minute, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé.
-  * Personalisé (3) : Permet de personaliser sa partie comme le joueur souhaite. 
+  * Personnalisé  (3) : Permet de personnaliser  sa partie comme le joueur souhaite. 
   * Tableau des score (4) : Afficher le tableau des scores.
   * Afficher le Readme (5) : Affiche le fichier Readme.
   * GitHub du projet (6) : Affiche le github du projet.
