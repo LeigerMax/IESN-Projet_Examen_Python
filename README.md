@@ -3,7 +3,7 @@
 Il s’agit d’un petit jeu de plateau (de 10 cases par défaut) sur lequel un joueur se déplace et doit
 récupérer des bonbons qui apparaissent aléatoirement. Le joueur à une minute pour en récolter le
 plus possible.
-Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magique font spawn entre 1 et 5 bonbons.
+Quand on ramasse un bonbon, il se peut que ce bonbon soit magique, les bonbons magiques font spawn entre 1 et 5 bonbons.
 Dans le jeu de base nous avons deux ennemis qui se balade aléatoirement sur la carte, une fois que celui-ci touche un bonbon, le bonbon est mangé. Si l'ennemi touche un joueur celui-ci perd 2 points. Si le joueur toucher à plus de 10 points, il perd tous ses points !
 
 
@@ -52,6 +52,8 @@ Cette fonction permet de vérifier si un ennemi touche un joueur ou pas. S"il le
 Permet d'enregistrer le score des joueurs dans un fichier.
 ### displayLeaderboard
 Permet d'ouvrir le fichier qui contient les scores et l'afficher.
+### displayReadme
+Affiche le ficher Readme.
 ### Menu
 Permet de créer un menu dès le lancement du jeu. Il affiche différente option de lancement : 
   * Normal (1) : 1 minute, 2 ennemis, mur bloquer et bonbon magique.
