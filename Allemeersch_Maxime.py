@@ -488,7 +488,7 @@ class Game:
             while now < end:
                 self.player1.move()
                 self.player2.move()
-                if random.randint(1, 4) == 1:
+                if random.randint(1, 6) == 1:
                     self.check_candy_out_of_date()
                 self.check_candy()
                 self.check_Wall()
