@@ -419,7 +419,8 @@ class Game:
         print("GitHub du projet (6) ")
         try:
             self._choiceLevel = int(input("Choix : "))
-            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4 and self._choiceLevel != 5 and self._choiceLevel != 6:
+            ListMenu = [1, 2, 3, 4, 5, 6]
+            while self._choiceLevel not in ListMenu :
                 self._choiceLevel = int(input("Numéro invalide! Choix : "))
             if self._choiceLevel == 1:
                 self.play()
