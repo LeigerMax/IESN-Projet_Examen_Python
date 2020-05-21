@@ -3,6 +3,9 @@
 
 import random
 import datetime
+import codecs #Permet de d'afficher un fichier en UTF-8
+import webbrowser
+
 
 class Player:
     keyboard_key = {'z': (-1, 0),
@@ -368,15 +371,14 @@ class Game:
                 self.player1._points -= 2
             elif self.player1._points > 10:
                  print(self.player1._name, " -",self.player1._points," pts")
-                 self.player1._points -= self.player1._points
+                 self.player1._points -= 0
         elif self.player2._position == self.enemy1._position or self.player2._position == self.enemy2._position:
             if self.player2._points <= 10:
                 print(self.player2._name, " -2 pts")
                 self.player2._points -= 2
             elif self.player2._points > 10:
                 print(self.player2._name, " -",self.player2._points," pts")
-                self.player2._points -= self.player2._points
-
+                self.player2._points -= 0
     #Enregistre le score
     def storeLeaderBoard(self):
         fi = open('Leaderboard.txt','a')
@@ -400,6 +402,12 @@ class Game:
             print(line.strip())
         self.menu()
 
+    def displayReadme(self):
+        print("--- Readme ---")
+        s = codecs.open('README.md', 'r', 'utf-8')
+        print ('fichier lu = ', s.read())
+        self.menu()
+
     #Menu
     def menu(self):
         print("--- Menu ---")
@@ -407,9 +415,11 @@ class Game:
         print("Difficle (2) : 1min, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé")
         print("Personnalisé (3) : Paramétrer la partie ")
         print("Tableau des scores (4) ")
+        print("Afficher le Readme (5) ")
+        print("GitHub du projet (6) ")
         try:
             self._choiceLevel = int(input("Choix : "))
-            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4:
+            while self._choiceLevel != 1 and self._choiceLevel != 2 and self._choiceLevel != 3 and self._choiceLevel != 4 and self._choiceLevel != 5 and self._choiceLevel != 6:
                 self._choiceLevel = int(input("Numéro invalide! Choix : "))
             if self._choiceLevel == 1:
                 self.play()
@@ -427,6 +437,11 @@ class Game:
                 self.play()
             elif self._choiceLevel == 4 :
                 self.displayLeaderboard()
+            elif self._choiceLevel == 5 :
+                self.displayReadme()
+            elif self._choiceLevel == 6 :
+                webbrowser.open("https://github.com/LeigerMax/ExamenPython")
+                self.menu()
         except ValueError:
             print("Valeur incorrect ! \n")
             self.menu()
