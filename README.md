@@ -25,6 +25,8 @@ Dans le jeu de base nous avons deux ennemis qui se balade aléatoirement sur la 
 - [X] Mettre des couleurs (Fonctionne que avec PyCharm)
 - [X] Bonbon avec malus
 - [X] Mode normal, difficile , personnalisé
+- [X] Permettre de se rendre sur le gihub.
+- [X] Afficher le Readme en jeu
 
 ## Player
 La Classe Player permet de créer des joueurs, elle permet de gérer les déplacements, les points et les noms des joueurs.
