@@ -60,6 +60,8 @@ Permet de créer un menu dès le lancement du jeu. Il affiche différente option
   * Difficile (2) : 1 minute, 2 ennemis avec 3 mouvements, moins de spawn de bonbon, bonbon périmé.
   * Personalisé (3) : Permet de personaliser sa partie comme le joueur souhaite. 
   * Tableau des score (4) : Afficher le tableau des scores.
+  * Afficher le Readme (5) : Affiche le fichier Readme.
+  * GitHub du projet (6) : Affiche le github du projet.
 ### play
 Permet de lancer le jeu par rapport aux paramètres que nous avons choisis.
 ### end_time
