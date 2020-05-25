@@ -381,26 +381,24 @@ class Game:
                 self.player2._points -= 0
     #Enregistre le score
     def storeLeaderBoard(self):
-        fi = open('Leaderboard.txt','a')
-        fi.write(str(self.player1._points)) #Enregistre le score Player1
-        fi.write(' ')
-        fi.write(self.player1._name) #Enregistre le nom Player1
-        fi.write('\n')
-        fi.write(str(self.player2._points)) #Enregistre le score Player2
-        fi.write(' ')
-        fi.write(self.player2._name) #Enregistre le nom Player2
-        fi.write('\n')
-        fi.close
+        with open('Leaderboard.txt','a') as fi:
+            fi.write(str(self.player1._points)) #Enregistre le score Player1
+            fi.write(' ')
+            fi.write(self.player1._name) #Enregistre le nom Player1
+            fi.write('\n')
+            fi.write(str(self.player2._points)) #Enregistre le score Player2
+            fi.write(' ')
+            fi.write(self.player2._name) #Enregistre le nom Player2
+            fi.write('\n')
 
     #Affiche le score
     def displayLeaderboard(self):
         print("--- Score ---")
-        fi = open('Leaderboard.txt','r')
-        lines = fi.readlines()
-        fi.close
-        for line in lines:
-            print(line.strip())
-        self.menu()
+        with  open('Leaderboard.txt','r') as fi:
+            lines = fi.readlines()
+            for line in lines:
+                print(line.strip())
+            self.menu()
 
     def displayReadme(self):
         print("--- Readme ---")
