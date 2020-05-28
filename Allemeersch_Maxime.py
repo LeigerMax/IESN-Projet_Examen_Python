@@ -17,6 +17,8 @@ class Player:
         self._name = name
         self._points = points
         self._position = start
+        self._last_position = start
+
 
     @property
     def name(self):
@@ -39,12 +41,23 @@ class Player:
     def position(self, new_position):
         self._position = new_position
 
+    @property
+    def lastPosition(self):
+        return self._last_position
+    @lastPosition.setter
+    def lastPosition(self, last_position):
+        self._last_position = last_position
+
     def move(self):
         key = input("Mouvement (z,q,s,d) : ")
         while key not in Player.keyboard_key.keys():
             key = input(" Erreur : Mouvement (z,q,s,d) : ")
         move = Player.keyboard_key[key]
-        self._position = (self._position[0] + move[0], self._position[1] + move[1])
+        self.new_position = (self._position[0] + move[0], self._position[1] + move[1])
+
+        if  self._last_position != self.new_position:
+            self._last_position = self._position
+            self._position = self.new_position
 
 class Enemy:
     keyboard_key = {'z': (-1, 0),
