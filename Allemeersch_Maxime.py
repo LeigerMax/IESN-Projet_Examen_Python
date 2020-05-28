@@ -38,8 +38,8 @@ class Player:
     def position(self):
         return self._position
     @position.setter
-    def position(self, new_position):
-        self._position = new_position
+    def position(self, position):
+        self._position = position
 
     @property
     def lastPosition(self):
@@ -48,16 +48,23 @@ class Player:
     def lastPosition(self, last_position):
         self._last_position = last_position
 
+    @property
+    def newPosition(self):
+        return self._new_position
+    @newPosition.setter
+    def newPosition(self, new_position):
+        self._new_position = new_position
+
     def move(self):
         key = input("Mouvement (z,q,s,d) : ")
         while key not in Player.keyboard_key.keys():
             key = input(" Erreur : Mouvement (z,q,s,d) : ")
         move = Player.keyboard_key[key]
-        self.new_position = (self._position[0] + move[0], self._position[1] + move[1])
+        self._new_position = (self._position[0] + move[0], self._position[1] + move[1])
 
-        if  self._last_position != self.new_position:
+        if  self._last_position != self._new_position:
             self._last_position = self._position
-            self._position = self.new_position
+            self._position = self._new_position
 
 class Enemy:
     keyboard_key = {'z': (-1, 0),
