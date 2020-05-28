@@ -519,7 +519,6 @@ class Game:
                     self.check_Enemy()
                     self.check_candy()
                     self.check_Wall()
-                    print(i)
                     i = i + 1
 
                 if random.randint(1, 3) == 1:
