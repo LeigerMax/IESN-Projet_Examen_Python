@@ -8,7 +8,7 @@ Dans le jeu de base nous avons deux ennemis qui se balade aléatoirement sur la 
 
 
 ## Tache à faire 
-- [ ] Empêcher le joueur de revenir en arrière [1]
+- [X] Empêcher le joueur de revenir en arrière [1]
 - [x] Ajouter un second joueur [3] 
 - [x] Ajouter des ennemis qui se déplacent aléatoirement [2]
 - [x] Donner des valeurs différentes aux bonbons récoltés (éventuellement malus) [1] 
