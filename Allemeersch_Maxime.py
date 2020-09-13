@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# -*- Create By Allemeersch Maxime -*-
+# -*- Create By LeigerMax -*-
 
 import random
 import datetime
