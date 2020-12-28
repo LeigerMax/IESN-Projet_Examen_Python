@@ -3,7 +3,7 @@
 
 import random
 import datetime
-import codecs #Permet de d'afficher un fichier en UTF-8
+import codecs #Permet de d'afficher un fichier en UTF-8 
 import webbrowser
 
 
